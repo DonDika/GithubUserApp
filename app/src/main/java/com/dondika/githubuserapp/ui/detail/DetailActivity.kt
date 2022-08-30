@@ -1,4 +1,4 @@
-package com.dondika.githubuserapp.ui
+package com.dondika.githubuserapp.ui.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

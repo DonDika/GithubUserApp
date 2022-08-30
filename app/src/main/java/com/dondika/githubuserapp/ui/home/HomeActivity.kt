@@ -1,4 +1,4 @@
-package com.dondika.githubuserapp.ui
+package com.dondika.githubuserapp.ui.home
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dondika.githubuserapp.data.User
 import com.dondika.githubuserapp.databinding.ActivityHomeBinding
+import com.dondika.githubuserapp.ui.detail.DetailActivity
+import com.dondika.githubuserapp.ui.adapter.UserAdapter
 
 class HomeActivity : AppCompatActivity() {
 
@@ -28,7 +30,7 @@ class HomeActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.VERTICAL, false)
         }
 
-        userAdapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback{
+        userAdapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback {
             override fun onItemClicked(user: User) {
                 val intent = Intent(this@HomeActivity, DetailActivity::class.java)
                 intent.putExtra(DetailActivity.EXTRA_USER, user)
