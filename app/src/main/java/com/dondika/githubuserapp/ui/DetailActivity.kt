@@ -2,6 +2,7 @@ package com.dondika.githubuserapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.dondika.githubuserapp.data.GithubUser
 import com.dondika.githubuserapp.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
@@ -13,7 +14,28 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setData()
     }
+
+    private fun setData() {
+        val userData = intent.getParcelableExtra<GithubUser>(EXTRA_USER) as GithubUser
+
+        binding.apply {
+            imgUser.setImageResource(userData.Avatar)
+            tvRepository.text = userData.Repository
+            tvFollowers.text = userData.Follower
+            tvFollowing.text = userData.Following
+            tvName.text = userData.Name
+            tvCompany.text = userData.Company
+            tvLocation.text = userData.Location
+        }
+
+        supportActionBar?.apply {
+            title = userData.Username
+        }
+
+    }
+
 
     companion object {
         const val EXTRA_USER = "extra_user"

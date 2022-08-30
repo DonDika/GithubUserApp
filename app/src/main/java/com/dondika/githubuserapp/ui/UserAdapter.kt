@@ -37,7 +37,6 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.ViewHolder>() {
                 tvName.text = user.Name
                 tvUsername.text = user.Username
                 tvCompany.text = user.Company
-                tvRepository.text = user.Repository
                 imgUser.setImageResource(user.Avatar)
             }
             itemView.setOnClickListener {

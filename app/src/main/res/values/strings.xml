@@ -6,6 +6,9 @@
     <string name="username">username</string>
     <string name="company">Company</string>
     <string name="repository">Repository</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="location">location</string>
 
 
     <string-array name="username">
