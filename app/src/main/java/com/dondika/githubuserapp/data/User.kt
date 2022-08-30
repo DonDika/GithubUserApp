@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class GithubUser(
+data class User(
     var Avatar: Int,
     var Name: String,
     var Username: String,

@@ -9,6 +9,7 @@
     <string name="followers">Followers</string>
     <string name="following">Following</string>
     <string name="location">location</string>
+    <string name="image_user">Image User</string>
 
 
     <string-array name="username">

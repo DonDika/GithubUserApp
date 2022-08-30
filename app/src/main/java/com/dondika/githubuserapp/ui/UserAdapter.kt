@@ -3,36 +3,40 @@ package com.dondika.githubuserapp.ui
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.dondika.githubuserapp.data.GithubUser
+import com.dondika.githubuserapp.data.User
 import com.dondika.githubuserapp.databinding.ItemUsersBinding
+import com.dondika.githubuserapp.utils.UserDiffCallback
 
-class UserAdapter: RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-    private val listUsers = ArrayList<GithubUser>()
+    private val listUser = ArrayList<User>()
 
-    fun setData(data: List<GithubUser>) {
-        listUsers.clear()
-        listUsers.addAll(data)
-        notifyDataSetChanged()
+    fun setData(listUser: List<User>) {
+        val diffCallback = UserDiffCallback(this.listUser, listUser)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        this.listUser.clear()
+        this.listUser.addAll(listUser)
+        diffResult.dispatchUpdatesTo(this@UserAdapter)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = ItemUsersBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return UserViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(listUsers[position])
+    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
+        holder.bind(listUser[position])
     }
 
     override fun getItemCount(): Int {
-        return listUsers.size
+        return listUser.size
     }
 
 
-    inner class ViewHolder(private val binding: ItemUsersBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: GithubUser){
+    inner class UserViewHolder(private val binding: ItemUsersBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(user: User){
             binding.apply {
                 tvName.text = user.Name
                 tvUsername.text = user.Username

@@ -2,7 +2,7 @@ package com.dondika.githubuserapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.dondika.githubuserapp.data.GithubUser
+import com.dondika.githubuserapp.data.User
 import com.dondika.githubuserapp.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
@@ -18,7 +18,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setData() {
-        val userData = intent.getParcelableExtra<GithubUser>(EXTRA_USER) as GithubUser
+        val userData = intent.getParcelableExtra<User>(EXTRA_USER) as User
 
         binding.apply {
             imgUser.setImageResource(userData.Avatar)

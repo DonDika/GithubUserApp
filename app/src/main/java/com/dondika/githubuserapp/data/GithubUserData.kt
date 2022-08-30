@@ -26,11 +26,11 @@ object GithubUserData {
         dataLocation = context.resources.getStringArray(R.array.location)
     }
 
-    fun listUser(context: Context): ArrayList<GithubUser> {
-        val listUser = ArrayList<GithubUser>()
+    fun listUser(context: Context): ArrayList<User> {
+        val listUser = ArrayList<User>()
         getData(context)
         for (position in dataName.indices) {
-            val gitUser = GithubUser(
+            val gitUser = User(
                 dataAvatar.getResourceId(position, -1),
                 dataName[position],
                 dataUsername[position],
