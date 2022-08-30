@@ -25,6 +25,18 @@ class UserRepository(
     }
 
 
+    companion object {
+        @Volatile
+        private var INSTANCE: UserRepository? = null
+        fun getInstance(apiService: ApiService): UserRepository {
+            return INSTANCE ?: synchronized(this) {
+                UserRepository(apiService).also {
+                    INSTANCE = it
+                }
+            }
+        }
+    }
+
 
 
 }
