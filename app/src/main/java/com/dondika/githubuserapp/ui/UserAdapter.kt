@@ -1,6 +1,5 @@
 package com.dondika.githubuserapp.ui
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,14 +10,19 @@ import com.dondika.githubuserapp.utils.UserDiffCallback
 
 class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-    private val listUser = ArrayList<User>()
+    private val listUsers = ArrayList<User>()
+    private lateinit var onItemClickCallback: OnItemClickCallback
 
-    fun setData(listUser: List<User>) {
-        val diffCallback = UserDiffCallback(this.listUser, listUser)
+    fun setListUsers(listUsers: List<User>) {
+        val diffCallback = UserDiffCallback(this.listUsers, listUsers)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
-        this.listUser.clear()
-        this.listUser.addAll(listUser)
+        this.listUsers.clear()
+        this.listUsers.addAll(listUsers)
         diffResult.dispatchUpdatesTo(this@UserAdapter)
+    }
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -27,13 +31,12 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        holder.bind(listUser[position])
+        holder.bind(listUsers[position])
     }
 
     override fun getItemCount(): Int {
-        return listUser.size
+        return listUsers.size
     }
-
 
     inner class UserViewHolder(private val binding: ItemUsersBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(user: User){
@@ -42,13 +45,15 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
                 tvUsername.text = user.Username
                 tvCompany.text = user.Company
                 imgUser.setImageResource(user.Avatar)
-            }
-            itemView.setOnClickListener {
-                val intent = Intent(itemView.context, DetailActivity::class.java)
-                intent.putExtra(DetailActivity.EXTRA_USER, user)
-                itemView.context.startActivity(intent)
+                root.setOnClickListener {
+                    onItemClickCallback.onItemClicked(user)
+                }
             }
         }
+    }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(user: User)
     }
 
 }

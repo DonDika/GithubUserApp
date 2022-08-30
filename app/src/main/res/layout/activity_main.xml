@@ -12,7 +12,6 @@
         android:layout_height="match_parent"
         android:padding="4dp"
         android:clipToPadding="false"
-        tools:listitem="@layout/item_users"
-        />
+        tools:listitem="@layout/item_users" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

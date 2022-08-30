@@ -1,9 +1,11 @@
 package com.dondika.githubuserapp.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dondika.githubuserapp.data.GithubUserData
+import com.dondika.githubuserapp.data.User
 import com.dondika.githubuserapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -20,12 +22,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun setAdapter() {
         val userAdapter = UserAdapter()
-        userAdapter.setData(GithubUserData.listUser(this@MainActivity))
+        userAdapter.setListUsers(GithubUserData.listUser(this@MainActivity))
 
         binding.rvUsers.apply {
             adapter = userAdapter
             layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
         }
+
+        userAdapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback{
+            override fun onItemClicked(user: User) {
+                val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                intent.putExtra(DetailActivity.EXTRA_USER, user)
+                startActivity(intent)
+            }
+
+        })
     }
 
 }

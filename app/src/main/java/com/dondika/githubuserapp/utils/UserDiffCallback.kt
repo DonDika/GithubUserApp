@@ -24,5 +24,4 @@ class UserDiffCallback(
         return oldItemPosition == newItemPosition
     }
 
-
 }
