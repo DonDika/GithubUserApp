@@ -11,17 +11,7 @@ class UserRepository(
 ) {
 
     fun fetchSearchUser(username: String) {
-        val client = apiService.fetchUser(username)
-        client.enqueue(object : Callback<SearchResponse>{
-            override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-
-        })
+        apiService.fetchUser(username)
     }
 
 

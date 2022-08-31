@@ -4,16 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.dondika.githubuserapp.data.User
+import com.dondika.githubuserapp.data.remote.response.SearchResponse
+import com.dondika.githubuserapp.data.remote.response.UserItem
 import com.dondika.githubuserapp.databinding.ItemUsersBinding
 import com.dondika.githubuserapp.utils.UserDiffCallback
 
 class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-    private val listUsers = ArrayList<User>()
+    private val listUsers = ArrayList<UserItem>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
-    fun setListUsers(listUsers: List<User>) {
+    fun setListUsers(listUsers: List<UserItem>) {
         val diffCallback = UserDiffCallback(this.listUsers, listUsers)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         this.listUsers.clear()
@@ -39,12 +42,14 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     }
 
     inner class UserViewHolder(private val binding: ItemUsersBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: User){
+        fun bind(user: UserItem){
             binding.apply {
-                tvName.text = user.Name
+                tvName.text = user.username
+                /*
                 tvUsername.text = user.Username
                 tvCompany.text = user.Company
-                imgUser.setImageResource(user.Avatar)
+                imgUser.setImageResource(user.Avatar)*/
+                Glide.with(itemView).load(user.avatarUrl).into(imgUser)
                 root.setOnClickListener {
                     onItemClickCallback.onItemClicked(user)
                 }
@@ -53,7 +58,7 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(user: User)
+        fun onItemClicked(user: UserItem)
     }
 
 }

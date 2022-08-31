@@ -2,16 +2,59 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeActivity">
 
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:src="@drawable/octocat"
+        android:contentDescription="Img Logo"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <SearchView
+        android:id="@+id/searchUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:iconifiedByDefault="false"
+        android:queryHint="@string/username"
+        android:background="@drawable/search_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgLogo"
+
+        />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvUsers"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="4dp"
-        android:clipToPadding="false"
-        tools:listitem="@layout/item_users" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        tools:listitem="@layout/item_users"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchUsername"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchUsername"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
