@@ -125,4 +125,29 @@
             app:drawableStartCompat="@drawable/ic_location" />
     </LinearLayout>
 
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/followTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorOnPrimary"
+        app:tabSelectedTextColor="?android:textColorPrimary"
+        app:tabTextColor="@android:color/darker_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container2"
+        />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/followViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/followTab"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

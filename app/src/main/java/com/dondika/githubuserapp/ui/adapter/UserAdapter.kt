@@ -5,8 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.dondika.githubuserapp.data.User
-import com.dondika.githubuserapp.data.remote.response.SearchResponse
 import com.dondika.githubuserapp.data.remote.response.UserItem
 import com.dondika.githubuserapp.databinding.ItemUsersBinding
 import com.dondika.githubuserapp.utils.UserDiffCallback
@@ -49,7 +47,9 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
                 tvUsername.text = user.Username
                 tvCompany.text = user.Company
                 imgUser.setImageResource(user.Avatar)*/
-                Glide.with(itemView).load(user.avatarUrl).into(imgUser)
+                Glide.with(itemView)
+                    .load(user.avatarUrl)
+                    .into(imgUser)
                 root.setOnClickListener {
                     onItemClickCallback.onItemClicked(user)
                 }

@@ -5,12 +5,11 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.SearchView
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dondika.githubuserapp.R
-import com.dondika.githubuserapp.data.User
 import com.dondika.githubuserapp.data.remote.response.UserItem
 import com.dondika.githubuserapp.databinding.ActivityHomeBinding
 import com.dondika.githubuserapp.ui.detail.DetailActivity
@@ -55,6 +54,7 @@ class HomeActivity : AppCompatActivity() {
         val userAdapter = UserAdapter()
         homeViewModel.listUser.observe(this){
             userAdapter.setListUsers(it)
+            //Log.e("followV", "DATA DI SEARCH ACT $it")
         }
         binding.rvUsers.apply {
             adapter = userAdapter

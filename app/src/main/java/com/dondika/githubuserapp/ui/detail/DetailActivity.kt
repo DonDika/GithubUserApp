@@ -3,9 +3,15 @@ package com.dondika.githubuserapp.ui.detail
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.annotation.StringRes
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.dondika.githubuserapp.R
 import com.dondika.githubuserapp.data.remote.response.DetailResponse
 import com.dondika.githubuserapp.databinding.ActivityDetailBinding
+import com.dondika.githubuserapp.ui.adapter.SectionPagerAdapter
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailActivity : AppCompatActivity() {
 
@@ -18,15 +24,14 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         getData()
+        setViewPager()
     }
+
 
     private fun getData() {
         val userData = intent.getStringExtra(EXTRA_USER)
 
-        //viewmodel -> fun(userData)
         detailViewModel.getDetailUser(userData!!)
-
-        //observe variable
         detailViewModel.userData.observe(this){
             setData(it)
         }
@@ -51,8 +56,27 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun setViewPager() {
+        val sectionPagerAdapter = SectionPagerAdapter(this@DetailActivity)
+        val viewPager: ViewPager2 = binding.followViewPager
+        viewPager.adapter = sectionPagerAdapter
+
+        val tabs: TabLayout = binding.followTab
+        TabLayoutMediator(tabs, viewPager){tab, position ->
+            tab.text = resources.getString(TAB_TITTLES[position])
+        }.attach()
+    }
+
+
+
+
     companion object {
         const val EXTRA_USER = "extra_user"
+        @StringRes
+        private val TAB_TITTLES = intArrayOf(
+            R.string.followers,
+            R.string.following
+        )
     }
 
 }

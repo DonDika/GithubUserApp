@@ -15,7 +15,7 @@ class DetailViewModel : ViewModel() {
     val userData: LiveData<DetailResponse> = _userData
 
     fun getDetailUser(username: String){
-        val client = ApiConfig.getApiService().getUsersDetail(username)
+        val client = ApiConfig.getApiService().getDetailUser(username)
         client.enqueue(object : Callback<DetailResponse>{
             override fun onResponse(call: Call<DetailResponse>, response: Response<DetailResponse>) {
                 _userData.value = response.body()

@@ -1,8 +1,6 @@
 package com.dondika.githubuserapp.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.dondika.githubuserapp.data.User
-import com.dondika.githubuserapp.data.remote.response.SearchResponse
 import com.dondika.githubuserapp.data.remote.response.UserItem
 
 class UserDiffCallback(
