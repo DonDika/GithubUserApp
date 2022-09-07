@@ -2,7 +2,6 @@ package com.dondika.githubuserapp.ui.follow
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,7 +41,6 @@ class FollowingFragment : Fragment() {
         followViewModel.getFollowingUser(username!!)
         followViewModel.listFollowing.observe(viewLifecycleOwner){
             followAdapter.setListUsers(it)
-            Log.e("followV", "DATA DI FRAGMENT $it")
         }
 
         followAdapter.setOnItemClickCallback(object: UserAdapter.OnItemClickCallback{

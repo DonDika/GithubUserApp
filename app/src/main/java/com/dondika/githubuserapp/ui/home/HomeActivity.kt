@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dondika.githubuserapp.R
 import com.dondika.githubuserapp.data.remote.response.UserItem
 import com.dondika.githubuserapp.databinding.ActivityHomeBinding
 import com.dondika.githubuserapp.ui.detail.DetailActivity
@@ -34,7 +33,6 @@ class HomeActivity : AppCompatActivity() {
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         binding.searchUsername.apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            queryHint = getString(R.string.username)
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(inputUsername: String): Boolean {
                     clearFocus()
