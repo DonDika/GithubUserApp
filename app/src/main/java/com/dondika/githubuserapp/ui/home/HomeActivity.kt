@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,7 +31,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setListener() {
-
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         binding.searchUsername.apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
@@ -47,14 +46,15 @@ class HomeActivity : AppCompatActivity() {
                 }
             })
         }
-
     }
 
     private fun setAdapter() {
         val userAdapter = UserAdapter()
+        homeViewModel.isLoading.observe(this){
+            showLoading(it)
+        }
         homeViewModel.listUser.observe(this){
             userAdapter.setListUsers(it)
-            //Log.e("followV", "DATA DI SEARCH ACT $it")
         }
         binding.rvUsers.apply {
             adapter = userAdapter
@@ -67,6 +67,16 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.rvUsers.visibility = View.GONE
+        } else {
+            binding.progressBar.visibility = View.GONE
+            binding.rvUsers.visibility = View.VISIBLE
+        }
     }
 
 }

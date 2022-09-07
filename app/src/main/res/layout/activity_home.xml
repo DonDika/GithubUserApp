@@ -12,7 +12,7 @@
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:src="@drawable/octocat"
-        android:contentDescription="Img Logo"
+        android:contentDescription="@string/logo"
         android:layout_marginTop="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,9 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgLogo"
-
         />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvUsers"
@@ -45,7 +43,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchUsername"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -55,6 +54,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchUsername"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

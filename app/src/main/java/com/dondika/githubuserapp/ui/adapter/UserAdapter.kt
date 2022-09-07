@@ -43,10 +43,7 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         fun bind(user: UserItem){
             binding.apply {
                 tvName.text = user.username
-                /*
-                tvUsername.text = user.Username
-                tvCompany.text = user.Company
-                imgUser.setImageResource(user.Avatar)*/
+                tvUsername.text = user.htmlUrl
                 Glide.with(itemView)
                     .load(user.avatarUrl)
                     .into(imgUser)

@@ -2,6 +2,7 @@ package com.dondika.githubuserapp.ui.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.viewpager2.widget.ViewPager2
@@ -14,7 +15,6 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityDetailBinding
     private val detailViewModel: DetailViewModel by viewModels()
 
@@ -27,11 +27,13 @@ class DetailActivity : AppCompatActivity() {
         setViewPager()
     }
 
-
     private fun getData() {
         val userData = intent.getStringExtra(EXTRA_USER)
 
         detailViewModel.getDetailUser(userData!!)
+        detailViewModel.isLoading.observe(this){
+            showLoading(it)
+        }
         detailViewModel.userData.observe(this){
             setData(it)
         }
@@ -53,6 +55,7 @@ class DetailActivity : AppCompatActivity() {
 
         supportActionBar?.apply {
             title = userData.username
+            setDisplayHomeAsUpEnabled(true)
         }
     }
 
@@ -67,8 +70,28 @@ class DetailActivity : AppCompatActivity() {
         }.attach()
     }
 
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading){
+            binding.apply {
+                progressBar.visibility = View.VISIBLE
+                container1.visibility = View.GONE
+                container2.visibility = View.GONE
+                followTab.visibility = View.GONE
+            }
+        } else {
+            binding.apply {
+                progressBar.visibility = View.GONE
+                container1.visibility = View.VISIBLE
+                container2.visibility = View.VISIBLE
+                followTab.visibility = View.VISIBLE
+            }
+        }
+    }
 
-
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 
     companion object {
         const val EXTRA_USER = "extra_user"

@@ -32,15 +32,13 @@ class FollowViewModel : ViewModel() {
     }
 
     fun getFollowingUser(username: String) {
-        Log.e("paramUser", "$username", )
         val client = ApiConfig.getApiService().getFollowingUser(username)
         client.enqueue(object : Callback<List<UserItem>>{
             override fun onResponse(call: Call<List<UserItem>>, response: Response<List<UserItem>>) {
                 _listFollowing.value = response.body()
-                //Log.e("followViewModel", "onResponse: ${response.body()}")
             }
             override fun onFailure(call: Call<List<UserItem>>, t: Throwable) {
-
+                Log.e("FollowViewModel", "onFailure: ${t.message.toString()}")
             }
         })
     }

@@ -13,28 +13,29 @@ import retrofit2.Response
 
 class HomeViewModel: ViewModel() {
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     private val _listUser = MutableLiveData<List<UserItem>>()
     val listUser: LiveData<List<UserItem>> = _listUser
 
-
     fun searchUser(username: String) {
+        _isLoading.value = true
         val client = ApiConfig.getApiService().searchUser(username)
         client.enqueue(object : Callback<SearchResponse>{
             override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     _listUser.value = response.body()?.items
-                    //Log.e("responViewModel", "onResponse: ${response.body()?.items}")
                 } else {
-                    Log.e("respon", "onFailure: ${response.message()}")
+                    Log.e("HomeViewModel", "onFailure: ${response.message()}")
                 }
             }
-
             override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
-                Log.e("respon", "onFailure: ${t.message.toString()}")
+                _isLoading.value = false
+                Log.e("HomeViewModel", "onFailure: ${t.message.toString()}")
             }
-
         })
     }
-
 
 }
