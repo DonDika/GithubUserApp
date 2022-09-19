@@ -1,11 +1,11 @@
 package com.dondika.githubuserapp.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.dondika.githubuserapp.data.remote.response.UserItem
+import com.dondika.githubuserapp.data.model.UserModel
 
 class UserDiffCallback(
-    private val oldUserList: List<UserItem>,
-    private val newUserList: List<UserItem>
+    private val oldUserList: List<UserModel>,
+    private val newUserList: List<UserModel>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

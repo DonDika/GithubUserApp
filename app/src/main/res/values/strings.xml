@@ -12,6 +12,13 @@
     <string name="image_user">Image User</string>
     <string name="number">178</string>
     <string name="logo">logo</string>
+    <string name="fav">favorite</string>
+    <string name="setting">Setting</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="no_fav">No Favorites</string>
+    <string name="no_followers">No Followers</string>
+    <string name="no_following">no_following</string>
+    <string name="no_follow">no follow</string>
 
 
 </resources>

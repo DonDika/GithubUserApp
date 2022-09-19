@@ -1,36 +1,26 @@
 package com.dondika.githubuserapp.ui.detail
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+
 import androidx.lifecycle.ViewModel
-import com.dondika.githubuserapp.data.remote.response.DetailResponse
-import com.dondika.githubuserapp.data.remote.retrofit.ApiConfig
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import androidx.lifecycle.viewModelScope
+import com.dondika.githubuserapp.data.model.UserModel
+import com.dondika.githubuserapp.data.repository.UserRepository
+import kotlinx.coroutines.launch
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
+    suspend fun getDetailUser(username: String) = userRepository.getDetailUser(username)
 
-    private val _userData = MutableLiveData<DetailResponse>()
-    val userData: LiveData<DetailResponse> = _userData
+    fun saveAsFavorites(userModel: UserModel) {
+        viewModelScope.launch {
+            userRepository.saveAsFavorites(userModel)
+        }
+    }
 
-    fun getDetailUser(username: String){
-        _isLoading.value = true
-        val client = ApiConfig.getApiService().getDetailUser(username)
-        client.enqueue(object : Callback<DetailResponse>{
-            override fun onResponse(call: Call<DetailResponse>, response: Response<DetailResponse>) {
-                _isLoading.value = false
-                _userData.value = response.body()
-            }
-            override fun onFailure(call: Call<DetailResponse>, t: Throwable) {
-                _isLoading.value = false
-                Log.e("HomeViewModel", "onFailure: ${t.message.toString()}")
-            }
-        })
+    fun deleteFromFavorites(userModel: UserModel) {
+        viewModelScope.launch {
+            userRepository.deleteFromFavorites(userModel)
+        }
     }
 
 }

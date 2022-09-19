@@ -5,16 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.dondika.githubuserapp.data.remote.response.UserItem
+import com.dondika.githubuserapp.data.model.UserModel
 import com.dondika.githubuserapp.databinding.ItemUsersBinding
 import com.dondika.githubuserapp.utils.UserDiffCallback
 
-class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-    private val listUsers = ArrayList<UserItem>()
+    private val listUsers = ArrayList<UserModel>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
-    fun setListUsers(listUsers: List<UserItem>) {
+    fun setListUsers(listUsers: List<UserModel>) {
         val diffCallback = UserDiffCallback(this.listUsers, listUsers)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         this.listUsers.clear()
@@ -39,8 +39,8 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         return listUsers.size
     }
 
-    inner class UserViewHolder(private val binding: ItemUsersBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: UserItem){
+    inner class UserViewHolder(private val binding: ItemUsersBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(user: UserModel){
             binding.apply {
                 tvName.text = user.username
                 tvUsername.text = user.htmlUrl
@@ -55,7 +55,8 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(user: UserItem)
+        fun onItemClicked(user: UserModel)
     }
+
 
 }

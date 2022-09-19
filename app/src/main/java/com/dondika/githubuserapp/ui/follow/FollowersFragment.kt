@@ -6,19 +6,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dondika.githubuserapp.data.remote.response.UserItem
+import com.dondika.githubuserapp.R
+import com.dondika.githubuserapp.data.model.UserModel
 import com.dondika.githubuserapp.databinding.FragmentFollowBinding
 import com.dondika.githubuserapp.ui.adapter.UserAdapter
 import com.dondika.githubuserapp.ui.detail.DetailActivity
+import com.dondika.githubuserapp.utils.Result
+import com.dondika.githubuserapp.utils.ViewModelFactory
 
 class FollowersFragment : Fragment() {
     private var _binding: FragmentFollowBinding? = null
     private val binding get() = _binding!!
-    private val followViewModel: FollowViewModel by activityViewModels()
+    private lateinit var followAdapter: UserAdapter
+    private val followViewModel: FollowViewModel by viewModels {
+        ViewModelFactory.getInstance(requireActivity())
+    }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentFollowBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -30,28 +36,52 @@ class FollowersFragment : Fragment() {
     }
 
     private fun setAdapter() {
-        val followAdapter = UserAdapter()
-        val username = activity?.intent?.getStringExtra(DetailActivity.EXTRA_USER).toString()
+        followAdapter = UserAdapter()
+        val username = activity?.intent?.getStringExtra(DetailActivity.EXTRA_USER) as String
 
         binding.rvUsers.apply {
             adapter = followAdapter
             layoutManager = LinearLayoutManager(activity)
         }
 
-        followViewModel.getFollowersUser(username)
-        followViewModel.listFollowers.observe(viewLifecycleOwner){
-            followAdapter.setListUsers(it)
+        followViewModel.getFollowers(username).observe(viewLifecycleOwner) {
+            when(it){
+                is Result.Loading -> onLoading()
+                is Result.Success -> it.data?.let { it1 -> onSuccess(it1) }
+                is Result.Error -> onFailed()
+            }
         }
 
-        followAdapter.setOnItemClickCallback(object: UserAdapter.OnItemClickCallback{
-            override fun onItemClicked(user: UserItem) {
-                val intent = Intent(requireContext(), DetailActivity::class.java)
+        followAdapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback{
+            override fun onItemClicked(user: UserModel) {
+                val intent = Intent(requireActivity(), DetailActivity::class.java)
                 intent.putExtra(DetailActivity.EXTRA_USER, user.username)
                 startActivity(intent)
             }
         })
 
     }
+
+    private fun onFailed() {
+        binding.progressBar.visibility = View.GONE
+        binding.rvUsers.visibility = View.GONE
+        binding.tvFollowError.visibility = View.VISIBLE
+        binding.tvFollowError.text = getString(R.string.no_followers)
+    }
+
+    private fun onSuccess(it1: List<UserModel>) {
+        followAdapter.setListUsers(it1)
+        binding.progressBar.visibility = View.GONE
+        binding.rvUsers.visibility = View.VISIBLE
+        binding.tvFollowError.visibility = View.GONE
+    }
+
+    private fun onLoading() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.rvUsers.visibility = View.GONE
+        binding.tvFollowError.visibility = View.GONE
+    }
+
 
 
     override fun onDestroyView() {
